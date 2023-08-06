@@ -12,7 +12,7 @@ const listContacts = async () => {
   return JSON.parse(data);
 };
 
-const getContactById = async (id) => {
+const contactById = async (id) => {
   const contacts = await listContacts();
   const result = contacts.find((item) => item.id === id);
   return result || null;
@@ -51,7 +51,7 @@ const updateContact = async (id, { name, email, phone }) => {
 
 export default {
   listContacts,
-  getContactById,
+  contactById,
   removeContact,
   addContact,
   updateContact,
