@@ -9,4 +9,8 @@ export const contactAddSchema = Joi.object({
   phone: Joi.string().min(10).max(15).required(),
 });
 
-export default contactAddSchema;
+export const contactUpdateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+});
+
+export default { contactAddSchema, contactUpdateFavoriteSchema };
