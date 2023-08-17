@@ -15,17 +15,18 @@ export const authenticate = async (req, res, next) => {
 
   try {
     const { id } = jwt.verify(token, JWT_SECRET);
-    const user = User.findById(id);
-    // console.log(user);
+    const user = await User.findById(id);
     if (!user) {
       throw HttpError(401);
     }
     req.user = user;
-    console.log(req.user);
+
     next();
   } catch (error) {
     next(error);
   }
 };
 
-export default ctrlWrapper(authenticate);
+export default {
+  authenticate: ctrlWrapper(authenticate),
+};

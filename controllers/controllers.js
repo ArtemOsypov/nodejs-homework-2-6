@@ -30,13 +30,13 @@ export const getById = async (req, res, next) => {
 };
 
 export const add = async (req, res, next) => {
-  console.log(req.user.objectId);
+  // console.log(req.user);
   // console.log(req.body);
-  // const { _id: owner } = req.user;
-  // const result = await Contact.create({ ...req.body, owner });
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   // console.log(owner);
-  // // console.log(result);
-  // res.status(201).json(result);
+  // console.log(result);
+  res.status(201).json(result);
 };
 
 export const delById = async (req, res, next) => {
