@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { HttpError } from "../helpers/index.js";
+import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -40,6 +41,7 @@ const signin = async (req, res, next) => {
       id: user._id,
     };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+    await User.findByIdAndUpdate(user._id, { token });
     res.json({
       token,
     });
@@ -48,7 +50,22 @@ const signin = async (req, res, next) => {
   }
 };
 
+const getCurrent = (req, res) => {
+  const { name, email } = req.user;
+  res.json({ name, email });
+};
+
+const signout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+  res.json({
+    massage: "signout sucsess!",
+  });
+};
+
 export default {
-  signup,
-  signin,
+  signup: ctrlWrapper(signup),
+  signin: ctrlWrapper(signin),
+  getCurrent: ctrlWrapper(getCurrent),
+  signout: ctrlWrapper(signout),
 };

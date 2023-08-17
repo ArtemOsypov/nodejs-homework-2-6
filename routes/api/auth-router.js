@@ -2,6 +2,7 @@ import express from "express";
 import { validateBody } from "../../decorators/index.js";
 import userSchema from "../../schema/user-schema.js";
 import authController from "../../controllers/auth-controller.js";
+import { authenticate } from "../../middlewars/authenticate.js";
 
 const authRouter = express.Router();
 
@@ -18,3 +19,7 @@ authRouter.post(
   validateBody(userSchema.userSigninSchema),
   authController.signin
 );
+
+authRouter.get("/current", authenticate, authController.getCurrent);
+
+authRouter.post("/signout", authenticate, authController.signout);
