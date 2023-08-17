@@ -2,9 +2,11 @@ import express from "express";
 
 import controller from "../../controllers/controllers.js";
 
-import { isValidId } from "../../middlewars/index.js";
+import { isValidId, authenticate } from "../../middlewars/index.js";
 
 const contactsRouter = express.Router();
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", controller.getAll);
 

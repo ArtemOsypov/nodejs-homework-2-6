@@ -12,3 +12,9 @@ authRouter.post(
   validateBody(userSchema.userSignUpSchema),
   authController.signup
 );
+
+authRouter.post(
+  "/signin",
+  validateBody(userSchema.userSigninSchema),
+  authController.signin
+);
