@@ -4,7 +4,13 @@ import controller from "../../controllers/controllers.js";
 
 import { isValidId } from "../../middlewars/index.js";
 
+
+import { authenticate } from "../../middlewars/authenticate.js";
+
 const contactsRouter = express.Router();
+
+contactsRouter.use(authenticate);
+
 
 contactsRouter.get("/", controller.getAll);
 
