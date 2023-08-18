@@ -3,6 +3,7 @@ import { validateBody } from "../../decorators/index.js";
 import userSchema from "../../schema/user-schema.js";
 import authController from "../../controllers/auth-controller.js";
 import { authenticate } from "../../middlewars/authenticate.js";
+import { upload } from "../../middlewars/upload.js";
 
 const authRouter = express.Router();
 
@@ -18,6 +19,13 @@ authRouter.post(
   "/signin",
   validateBody(userSchema.userSigninSchema),
   authController.signin
+);
+
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.updateAvatar
 );
 
 authRouter.get("/current", authenticate, authController.getCurrent);
