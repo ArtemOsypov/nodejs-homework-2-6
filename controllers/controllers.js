@@ -8,6 +8,7 @@ import { contactAddSchema } from "../schema/schema.js";
 
 export const getAll = async (req, res, next) => {
   try {
+
     // message": "Cannot use an expression limit: \"1\" in an exclusion projection"
     const { page = 1, limit = 5 } = req.query;
     console.log(req.query);
@@ -17,6 +18,7 @@ export const getAll = async (req, res, next) => {
       "owner",
       "name"
     );
+
     res.json(result);
   } catch (error) {
     next(error);
@@ -38,8 +40,10 @@ export const getById = async (req, res, next) => {
 };
 
 export const add = async (req, res, next) => {
+
   const { _id: owner } = req.user;
   const result = await Contact.create({ ...req.body, owner });
+
   res.status(201).json(result);
 };
 
