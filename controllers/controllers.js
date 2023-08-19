@@ -1,4 +1,5 @@
-// import contactsService from "../models/contacts.js";
+import fs from "fs/promises";
+import path from "path";
 
 import Contact from "../models/contacts.js";
 
@@ -6,9 +7,10 @@ import { HttpError } from "../helpers/index.js";
 
 import { contactAddSchema } from "../schema/schema.js";
 
+const avatarsPath = path.resolve("public", "avatars");
+
 export const getAll = async (req, res, next) => {
   try {
-
     // message": "Cannot use an expression limit: \"1\" in an exclusion projection"
     const { page = 1, limit = 5 } = req.query;
     console.log(req.query);
@@ -40,9 +42,13 @@ export const getById = async (req, res, next) => {
 };
 
 export const add = async (req, res, next) => {
-
   const { _id: owner } = req.user;
-  const result = await Contact.create({ ...req.body, owner });
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(avatarsPath, filename);
+  const avatarURL = path.join("avatars", filename);
+  await fs.rename(oldPath, newPath);
+  const result = await Contact.create({ ...req.body, avatarURL, owner });
+  // console.log(result);
 
   res.status(201).json(result);
 };
