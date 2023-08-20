@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 import { validateAtUpdate, hamdleSaveError } from "./hooks.js";
 
 import { emailRegexp } from "../constants/user-constants.js";
+// import { boolean } from "joi";
 
 const userSchema = new Schema(
   {
@@ -26,6 +27,13 @@ const userSchema = new Schema(
       type: String,
     },
     avatarUrl: {
+      type: String,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
       type: String,
     },
   },
