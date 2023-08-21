@@ -54,7 +54,7 @@ const verify = async (req, res) => {
   }
   await User.findByIdAndUpdate(user._id, {
     verify: true,
-    verificationCode: "",
+    verificationCode: null,
   });
   console.log(user._id);
   res.json({
